@@ -1,0 +1,38 @@
+# Apache HttpClient Interceptor
+
+## Installation
+
+In Gradle:
+```gradle
+implementation group: 'dev.jora.postman4j', name: 'hc5-interceptor', version: '0.0.4'
+```
+
+In Maven:
+```xml
+<dependency>
+    <groupId>dev.jora.postman4j</groupId>
+    <artifactId>hc5-interceptor</artifactId>
+    <version>0.0.4</version>
+</dependency>
+```
+
+## Usage
+
+Example of instrumenting a custom function in your Java code:
+
+```java
+@UsePostmanCollection("My Test Collection")
+@UsePostmanFolderPath("Folder #1")
+@UsePostmanRequest("My Request")
+@UsePostmanResponse("My Response")
+public static void executeRequest(CloseableHttpClient httpClient, HttpUriRequestBase request) throws IOException {
+    try (CloseableHttpResponse response = httpClient.execute(request)) {
+        System.out.println(response.getCode());
+    }
+}
+```
+
+Example of a generated collection:
+
+![Generated Collection](/img-hc5.png)
+

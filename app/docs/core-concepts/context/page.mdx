@@ -1,0 +1,9 @@
+---
+title: Working with context
+---
+# What is context in Postman4j?
+
+Context is a name of postman collection and settings of writing to this collection by postman4j interceptors.
+Multiple postman4j interceptors can write to the same context.
+
+Context name could be defined over `@UsePostmanCollection` annotation or over property `contexts` in folder and request level annotations.

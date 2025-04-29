@@ -1,0 +1,33 @@
+---
+title: "restassured"
+---
+
+# RestAssured Interceptor
+
+## Installation
+
+import { Tabs, Tab } from 'nextra/components'
+
+{/* prettier-ignore */}
+<Tabs items={['gradle', 'maven']}>
+  <Tabs.Tab>
+    ```gradle
+    implementation group: 'dev.jora.postman4j', name: 'restassured-interceptor', version: '0.0.4'
+    ```
+  </Tabs.Tab>
+  <Tabs.Tab>
+    ```xml
+    <dependency>
+        <groupId>dev.jora.postman4j</groupId>
+        <artifactId>restassured-interceptor</artifactId>
+        <version>0.0.4</version>
+    </dependency>
+    ```
+  </Tabs.Tab>
+</Tabs>
+
+## Usage
+
+### Example: Logging Requests and Responses
+
+The `PostmanRestassuredFilter` can be used to log HTTP requests and responses as Postman collections

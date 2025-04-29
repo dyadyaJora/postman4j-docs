@@ -1,0 +1,27 @@
+---
+title: Settings
+sidebarTitle: ⚙️ Settings
+---
+
+# Settings
+
+Below are the configurable settings for Postman4j Interceptors:
+
+| Setting Name             | Allowed Values                                   | Description (Default Value)                                                             |
+|--------------------------|--------------------------------------------------|-----------------------------------------------------------------------------------------|
+| `baseCollectionName`     | `String`                                         | The default name of the collection (default: `Generated Collection`)                    |
+| `baseCollectionDescription` | `String`                                     | The default description of the collection (default: `Generated Collection Description`) |
+| `schemaVersion`          | `V2_1_0`                                         | The schema version of the collection (default: `V2_1_0`)                                |
+| `requestResponseMode`    | `REQUEST_ONLY` \| `REQUEST_AND_RESPONSE`         | The mode of the request-response logging (default: `REQUEST_AND_RESPONSE`)              |
+| `enableRequestBody`      | `boolean`                                        | Whether to log the request body (default: `true`)                                       |
+| `enableResponseBody`     | `boolean`                                        | Whether to log the response body (default: `true`)                                      |
+| `logWhenChanged`         | `boolean`                                        | Enable logging of the collection to stdout when changed (default: `true`)               |
+| `itemNamingStrategy`     | `COUNTER`, `UUID`, `FROM_HEADER`                 | The naming strategy for the items (default: `COUNTER`)                                  |
+| `outputLocation`         | `CONSOLE`, `FILE`, `BOTH`                        | **(not supported yet)** The output location for the collection (`CONSOLE`)              |
+| `selectedStatuses`       | `List<Integer>`                                  | The selected statuses to save when filtering responses (default: `empty list`)          |
+| `selectedHeaders`        | `List<String>`                                   | The selected headers to save when filtering responses (default: `empty list`)           |
+| `selectedExceptions`     | `List<String>`                                   | The selected exceptions to save when filtering responses (default: `empty list`)        |
+| `headerName`             | `String`                                         | The header name to use for the request name (default: `null`)                           |
+| `customStatusFilter`     | `Predicate<Integer>`                             | The custom status filter function to use when filtering responses (default: `null`)     |
+| `foldingStrategy`        | `NO_FOLDERS`, `ONE_FOLDER_PER_REQUEST`, `CUSTOM` | **(not supported yet)** The folding strategy to use when folding items (`NO_FOLDERS`)   |
+| `disableOnActuator`      | `boolean`                                        | Whether to disable the interceptor for actuator endpoints (default: `true`)             |
