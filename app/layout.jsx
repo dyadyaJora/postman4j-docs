@@ -30,7 +30,7 @@ export const metadata = {
     ]
   },
   icons: {
-    icon: 'favicon.ico',
+    icon: '/favicon.ico',
   }
 };
  
@@ -63,10 +63,10 @@ export default async function RootLayout({ children }) {
       </Head>
       <body>
         <Layout
-          banner={banner}
+          // banner={banner}
           navbar={navbar}
           pageMap={await getPageMap()}
-          docsRepositoryBase="https://github.com/dyadyaJora/postman4j-docs/tree/master/"
+          docsRepositoryBase="https://github.com/dyadyaJora/postman4j-docs/tree/master"
           footer={footer}
         >
           {children}
