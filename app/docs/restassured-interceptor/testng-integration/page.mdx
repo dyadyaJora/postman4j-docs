@@ -4,5 +4,27 @@ title: "TestNG Integration"
 
 # TestNG Integration
 
-TODO
+RestAssured Interceptor can also be used with TestNG.
+The interceptor is registered as a TestNG Listener, which allows you to save the generated Postman collection after each test method execution and use test method name as a folder name in the Postman collection.
 
+In order to use the interceptor with TestNG, you need to add the `PostmanTestNGListener` to your test class.
+This can be done by annotating your test class with `@Listeners` and specifying the listener class:
+
+```java
+import dev.jora.postman4j.testng.PostmanTestNgMethodListener;
+import dev.jora.postman4j.testng.PostmanTestNgSuiteListener;
+// ...
+@Listeners({PostmanTestNgMethodListener.class, PostmanTestNgSuiteListener.class})
+public class RestAssuredTestNgTest {
+    // Your test methods here
+}
+```
+
+Or you can add the listener to your `testng.xml` file:
+
+```xml
+<listeners>
+    <listener class-name="dev.jora.postman4j.testng.PostmanTestNgMethodListener"/>
+    <listener class-name="dev.jora.postman4j.testng.PostmanTestNgSuiteListener"/>
+</listeners>
+```

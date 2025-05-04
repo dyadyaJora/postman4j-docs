@@ -1,5 +1,5 @@
 ---
-title: "restassured"
+title: "RestAssured"
 ---
 
 # RestAssured Interceptor
@@ -12,7 +12,7 @@ import { Tabs, Tab } from 'nextra/components'
 <Tabs items={['gradle', 'maven']}>
   <Tabs.Tab>
     ```gradle
-    implementation group: 'dev.jora.postman4j', name: 'restassured-interceptor', version: '0.0.4'
+    implementation group: 'dev.jora.postman4j', name: 'restassured-interceptor', version: '0.0.5-alpha'
     ```
   </Tabs.Tab>
   <Tabs.Tab>
@@ -20,7 +20,7 @@ import { Tabs, Tab } from 'nextra/components'
     <dependency>
         <groupId>dev.jora.postman4j</groupId>
         <artifactId>restassured-interceptor</artifactId>
-        <version>0.0.4</version>
+        <version>0.0.5-alpha</version>
     </dependency>
     ```
   </Tabs.Tab>
@@ -28,6 +28,33 @@ import { Tabs, Tab } from 'nextra/components'
 
 ## Usage
 
-### Example: Logging Requests and Responses
+Define a custom filter for RestAssured requests and responses. The filter will automatically generate a Postman collection based on the requests and responses made during the `given` HTTP call execution.
 
-The `PostmanRestassuredFilter` can be used to log HTTP requests and responses as Postman collections
+```java
+import dev.jora.postman4j.restassured.PostmanRestassuredFilter;
+import dev.jora.postman4j.utils.PostmanSettings;
+// ...
+PostmanSettings settings = PostmanSettings.builder()
+        .baseCollectionName("My Collection")
+        .baseCollectionDescription("My Collection Description")
+        .schemaVersion(SchemaVersion.V2_1_0)
+        .requestResponseMode(RequestResponseMode.REQUEST_AND_RESPONSE)
+        .enableRequestBody(true)
+        .enableResponseBody(true)
+        .logWhenChanged(true)
+        .itemNamingStrategy(ItemNamingStrategy.COUNTER)
+        .build();
+
+PostmanRestassuredFilter postmanRestassuredFilter = new PostmanRestassuredFilter(settings);
+RestAssured.filters(postmanRestassuredFilter);
+```
+
+After executing the HTTP call generated Postman collection will be saved in the `data` object. You can use the `PostmanCollection` class to serialize the collection to a JSON string or file.
+
+```java
+PostmanCollection collection = filter.getData().get("My Collection");
+
+System.out.println(ConverterUtils.toJsonString(collection));
+```
+
+How to setup generation and saving postman collection in your java tests read in next chapters.

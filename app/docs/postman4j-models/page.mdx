@@ -1,0 +1,63 @@
+---
+title: postman4j-models
+sidebarTitle: Postman Models
+---
+
+# Postman4J Models
+
+This projects provides a set of models with that is easy to use Java classes for further work with Postman collections from Java code.
+Required Java 11+.
+
+## Installation
+
+import { Tabs, Tab } from 'nextra/components'
+
+{/* prettier-ignore */}
+<Tabs items={['gradle', 'maven']}>
+  <Tabs.Tab>
+    ```gradle
+    implementation group: 'dev.jora.postman4j', name: 'postman4j-models', version: '0.0.4'
+    ```
+  </Tabs.Tab>
+  <Tabs.Tab>
+    ```xml
+    <dependency>
+        <groupId>dev.jora.postman4j</groupId>
+        <artifactId>postman4j-models</artifactId>
+        <version>0.0.4</version>
+    </dependency>
+    ```
+  </Tabs.Tab>
+</Tabs>
+
+## Use Postman Collection models
+
+Create a new Postman collection Java object using the PostmanCollection.java class and fill it with the data you need:
+
+
+```java
+import dev.jora.postman4j.models.PostmanCollection;
+import dev.jora.postman4j.models.Information;
+import dev.jora.postman4j.models.SchemaVersion;
+
+//...
+
+PostmanCollection postmanCollection = new PostmanCollection();
+Information information = new Information();
+information.setName("My Collection");
+information.setSchema(schemaVersion.getSchemaUrl());
+postmanCollection.setInfo(information);
+
+```
+
+## Parse and serialize Postman collections
+
+Serialize and parse Postman collection from a JSON string using ConverterUtils:
+
+```java
+import dev.jora.postman4j.utils.ConverterUtils;
+import dev.jora.postman4j.models.PostmanCollection;
+// ...
+PostmanCollection postmanCollection = ConverterUtils.fromJsonString(jsonString);
+String jsonString = ConverterUtils.toJsonString(postmanCollection);
+```

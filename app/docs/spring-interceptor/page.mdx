@@ -1,13 +1,26 @@
 # Spring Interceptor
 
+In order to use Postman4j with Spring, you need to:
+* add the `spring-interceptor` dependency to your projects
+* Annotate you controller methods with `@UsePostmanCollection` annotation and endpoints with `@UsePostmanFolderPath`, `@UsePostmanRequest` and `@UsePostmanResponse` if needed.
+* Run your application with bootRun
+* Call some of your endpoints
+* Go to `http://localhost:8080/actuator/postman-collections/{your collection name}` to get your generated postman collection
+
+Full setup example is available in the [Postman4j Spring Demo](https://github.com/dyadyaJora/demo-spring-postman-interceptor).
+
 ## Installation
 
-In Gradle:
+import { Tabs, Tab } from 'nextra/components'
+
+{/* prettier-ignore */}
+<Tabs items={['gradle', 'maven']}>
+    <Tabs.Tab>
 ```gradle
 implementation group: 'dev.jora.postman4j', name: 'spring-interceptor', version: '0.0.4'
 ```
-
-In Maven:
+    </Tabs.Tab>
+    <Tabs.Tab>
 ```xml
 <dependency>
     <groupId>dev.jora.postman4j</groupId>
@@ -15,7 +28,100 @@ In Maven:
     <version>0.0.4</version>
 </dependency>
 ```
+    </Tabs.Tab>
+</Tabs>
 
 ## Usage
 
-For detailed setup instructions, see the [demo-spring-postman-interceptor
+
+## Register interceptor filter
+
+Prepare postman4j settings for your application. You can set up the settings in the `application.properties` file or create a `PostmanSettings` bean in your Spring configuration class.
+
+```java
+@Bean
+public PostmanSettings postmanSettings() {
+    return PostmanSettings.builder()
+            // ...
+            .build();
+}
+```
+
+Register interceptor PostmanMiddlewareFilter class for selected filters 
+
+```java
+@Bean
+    public FilterRegistrationBean<PostmanMiddlewareFilter> postmanMiddlewareFilterRegistration(@Autowired PostmanMiddlewareFilter postmanMiddlewareFilter) {
+        FilterRegistrationBean<PostmanMiddlewareFilter> registrationBean = new FilterRegistrationBean<>();
+        registrationBean.setFilter(postmanMiddlewareFilter);
+        registrationBean.addUrlPatterns("/*");
+        return registrationBean;
+    }
+
+    @Bean
+    public PostmanMiddlewareFilter postmanMiddlewareFilter(@Autowired PostmanSettings postmanSettings) {
+        return new PostmanMiddlewareFilter(postmanSettings);
+    }
+```
+
+Set annotations for your controller methods in order to set custom names for your Postman collections, folders, requests and responses.
+
+```java
+import dev.jora.postman4j.annotations.UsePostmanCollection;
+import dev.jora.postman4j.annotations.UsePostmanFolderPath;
+import dev.jora.postman4j.annotations.UsePostmanRequest;
+import dev.jora.postman4j.annotations.UsePostmanResponse;
+//...
+
+@RestController
+@UsePostmanCollection("Default collection")
+public class DefaultController {
+    @GetMapping("/default")
+    @UsePostmanFolderPath("default folder")
+    public ResponseEntity getPredefinedResponse(@RequestParam(value = "retry", defaultValue = "0") String retry) {
+        // ...
+    }
+
+    @GetMapping("/default/{id}")
+    @UsePostmanFolderPath("default folder/{id}")
+    public ResponseEntity getPredefinedResponseById(@PathParam("id") String id, @RequestParam(value = "retry", defaultValue = "0") String retry) {
+        // ...
+    }
+
+    @GetMapping("/hello")
+    @UsePostmanFolderPath("hello")
+    @UsePostmanRequest("hello request")
+    @UsePostmanResponse("hello response")
+    public String hello() {
+        return "Hello, World!";
+    }
+    // ...
+}
+```
+
+![Generated Postman Collection from Spring application](/img-spring.png)
+
+## (Optional) Setup as Actuator Endpoint
+
+In order to get traceability of your requests, you can set up the Postman4j as an actuator endpoint. This will allow you to get the generated Postman collection from the actuator endpoint.
+
+Create bean with PostmanActuatorEndpoint class
+
+```java
+@Bean
+public PostmanActuatorEndpoint postmanActuatorEndpoint(@Autowired PostmanMiddlewareFilter postmanMiddlewareFilter) {
+    return new PostmanActuatorEndpoint(postmanMiddlewareFilter);
+}
+```
+
+Register postman-collections endpoint in settings
+
+```yaml
+management:
+  endpoints:
+    web:
+      exposure:
+        include: 'health,postman-collections'
+```
+
+![As Spring Actuator](/img-actuator.png)

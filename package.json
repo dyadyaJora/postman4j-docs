@@ -6,12 +6,14 @@
   "scripts": {
     "dev": "next",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "postbuild": "pagefind --site .next/server/app --output-path out/_pagefind"
   },
   "keywords": [],
   "author": "@dyadyaJora",
   "license": "ISC",
   "dependencies": {
+    "dotenv": "^16.5.0",
     "next": "^15.2.4",
     "nextra": "^4.2.17",
     "nextra-theme-docs": "^4.2.17",
@@ -20,6 +22,7 @@
   },
   "devDependencies": {
     "@types/node": "22.14.0",
-    "@types/react": "19.1.0"
+    "@types/react": "19.1.0",
+    "pagefind": "^1.3.0"
   }
 }

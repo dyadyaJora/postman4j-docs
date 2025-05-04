@@ -19,7 +19,7 @@ export default function Page() {
           Use postman models in your application, setup interceptors and automate your HTTP requests workflow with <b>dev.jora.postman4j</b>
         </p>
         <div className={styles.buttonGroup}>
-          <Link href="/docs/getting-started" className="bigButton">
+          <Link href="/docs" className="bigButton">
             Get started <span>→</span>
           </Link>
           <Link

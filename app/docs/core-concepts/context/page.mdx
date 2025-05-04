@@ -4,6 +4,35 @@ title: Working with context
 # What is context in Postman4j?
 
 Context is a name of postman collection and settings of writing to this collection by postman4j interceptors.
-Multiple postman4j interceptors can write to the same context.
+This allow multiple different postman4j interceptors to write to the same context.
+For example, you can have multiple apache `HttpClient` in your applicated that intercepted by `Postman4j` - all of them will write to the same context, so all requests will be in the same postman collection.
+**By default context name is `Generated Context` and all interceptors write to this context.**
 
 Context name could be defined over `@UsePostmanCollection` annotation or over property `contexts` in folder and request level annotations.
+
+
+```mermaid
+sequenceDiagram
+    participant UserCode as Your Method (with @UsePostmanFolderPath)
+    participant Aspect as PostmanCoreAspect
+    participant Context as IPostmanContext
+    participant Interceptor as BasePostmanInterceptor Logic
+
+    UserCode->>Aspect: Method Execution Starts
+    Aspect->>Context: setFolderPath("User Management")
+    Note right of Context: Context now holds "User Management" for folder path
+    Aspect->>UserCode: Proceed with method body
+    UserCode->>UserCode: Makes HTTP Call (e.g., to /api/users)
+    Note over UserCode,Interceptor: HTTP call triggers Interceptor
+    Interceptor->>Context: getFolderPath()
+    Context-->>Interceptor: "User Management"
+    Interceptor->>Context: getSettings()
+    Context-->>Interceptor: settings
+    Interceptor->>Context: getData()
+    Context-->>Interceptor: collectionDataMap
+    Interceptor->>Interceptor: Builds Postman Item and places it in "User Management" folder within collectionDataMap
+    UserCode-->>Aspect: Method Execution Finishes
+    Aspect->>Context: removeFolderPath()
+    Note right of Context: Folder path override is cleared
+    Aspect-->>UserCode: Method Returns/Completes
+```

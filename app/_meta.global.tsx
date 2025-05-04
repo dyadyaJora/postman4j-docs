@@ -1,11 +1,21 @@
 import type { MetaRecord } from 'nextra'
 const DOCS_SIDEBAR_MENU: MetaRecord = {
     index: '',
-    'getting-started': '',
+    'getting-started': {
+      display: 'hidden',
+    },
     _: {
       type: 'separator',
-      title: 'Libraries'
-    }
+      title: 'Libraries' // @TODO: split this into two sections: Interceptors and Utils
+    },
+    'postman4j-models': '',
+    'apache-interceptor': '',
+    'spring-interceptor': '',
+    'restassured-interceptor': '',
+    __: {
+      type: 'separator',
+      title: 'How it works'
+    },
 }
 
 export default {

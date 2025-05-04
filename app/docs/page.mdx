@@ -2,6 +2,33 @@
 title: Introduction
 ---
 
-# Welcome
+# Postman4J
 
-Welcome to the Postman4j Interceptors documentation! This site provides detailed information about the library, its features, and usage.
+Welcome to this Postman4j Interceptors documentation! This site provides detailed information about the library, its features, and usage.
+
+## What is Postman4j?
+
+**Postman4j** is lightweight set of java libraries for tracing and logging HTTP requests and responses in the form of a Postman collection. It is designed to be simple and easy to use, allowing you to quickly set up interceptors for your HTTP clients.
+It is particularly useful for developers who want to log their HTTP request chains and reuse them in the Postman app.
+
+## How to use postman4j interceptors?
+
+Get started with currently supported interceptors, which include:
+- **Apache HttpClient**: Interceptor for Apache HttpClient, a popular HTTP client library for Java.
+- **Spring MVC**: Interceptor for Spring MVC, a widely used framework for building web applications in Java.
+- **restassured**: Interceptor for RestAssured, a Java library for testing RESTful web services.
+
+If you are using any of these libraries, you can easily integrate Postman4j Interceptors into your project and start logging your HTTP requests and responses.
+In case you are using any other HTTP client library, please feel free to create an issue or a pull request in the [GitHub repository](https://github.com/dyadyaJora/postman4j-interceptors/issues/new). We are open to adding support for more libraries in the future.
+
+All libraries are open source under MIT License.
+
+## How to observe your HTTP requests?
+
+You can observe your HTTP chains in the Postman app by importing the generated Postman collection. This allows you to easily visualize and analyze your HTTP requests and responses, making it easier to debug and optimize your applications.
+
+* Choose and add your library
+* Inject interceptor into your HTTP client
+* Enable logging or get generated `PostmanCollection` from context
+
+Learn more about how to use Postman4j Interceptors in the [Getting Started](docs/getting-started) section.

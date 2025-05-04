@@ -1,8 +1,18 @@
 ---
-title: "JUnit Integration"
+title: "JUnit5 Integration"
 ---
 
-# JUnit Integration
+# JUnit 5 Integration
 
-TODO
+RestAssured Interceptor can be used with JUnit 5.
+The interceptor is registered as a JUnit rule or extension, which allows you to save the generated Postman collection after each test method execution and use test method name as a folder name in the Postman collection.
+
+```java
+import dev.jora.postman4j.junit5.PostmanJunit5Extension;
+// ...
+@ExtendWith(PostmanJunit5Extension.class)
+public class RestAssuredJUnit5ExtensionTest {
+    // Your test methods here
+}
+```
 
