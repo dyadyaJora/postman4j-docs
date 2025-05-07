@@ -20,6 +20,9 @@ jobs:
       matrix:
         node-version: [22.x]
 
+    env:
+      NEXT_PUBLIC_CLARITY_APP_ID: ${{ secrets.NEXT_PUBLIC_CLARITY_APP_ID }}
+
     steps:
     - uses: actions/checkout@v4
     - uses: pnpm/action-setup@v4
